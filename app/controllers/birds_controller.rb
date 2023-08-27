@@ -1,4 +1,5 @@
 class BirdsController < ApplicationController
+  wrap_parameters format: []
 
   # GET /birds
   def index
@@ -6,12 +7,12 @@ class BirdsController < ApplicationController
     render json: birds
   end
 
-  # POST /birds
   def create
-    bird = Bird.create(name: params[:name], species: params[:species])
+    bird = Bird.create(params.permit(:name, :species))
     render json: bird, status: :created
   end
 
+  
   # GET /birds/:id
   def show
     bird = Bird.find_by(id: params[:id])
